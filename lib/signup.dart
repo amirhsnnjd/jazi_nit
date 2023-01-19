@@ -1,20 +1,23 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-import 'package:provider/provider.dart';
+class Signup extends StatefulWidget {
+  const Signup({Key? key}) : super(key: key);
 
-class Login extends StatefulWidget {
   @override
-  State<Login> createState() => _LoginState();
+  State<Signup> createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   var txt = "updated";
+
   @override
   Widget build(BuildContext context) {
     final _formkey = GlobalKey<FormState>();
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -59,7 +62,6 @@ class _LoginState extends State<Login> {
                 ),
               )),
             ),
-            //form
             Container(
               child: Form(
                   key: _formkey,
@@ -157,39 +159,149 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                      TextButton(
-                          onPressed: () => {
-                                /* Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUp()),
-                                  )
-                                */
-                              },
-                          child: Text(
-                            "don't have an account?",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontStyle: FontStyle.italic),
-                          )),
-                      TextButton(
-                          onPressed: () => {
-                                /*Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Reset()),
-                                  )*/
-                              },
-                          child: Text(
-                            "forgot password",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontStyle: FontStyle.italic),
-                          )),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Container(
+                          width: 300,
+                          height: 60,
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                                hintText: 'name',
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.greenAccent, width: 5.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 5.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.red, width: 5.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.red, width: 5.0),
+                                ),
+                                suffixIcon: Icon(
+                                  Icons.person,
+                                  color: Colors.black,
+                                ),
+                                suffixIconColor: Colors.black,
+                                errorStyle: TextStyle(
+                                  color: Colors.red,
+                                ),
+                                hintStyle: TextStyle(
+                                    fontSize: 20, color: Colors.black)),
+                            validator: ((value) {
+                              if (value!.isEmpty ||
+                                  value == null ||
+                                  value.characters.length < 8)
+                                return ('name should be more than 8 charachters');
+                              else
+                                return null;
+                            }),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Container(
+                          width: 300,
+                          height: 60,
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                                hintText: 'lastname',
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.greenAccent, width: 5.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 5.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.red, width: 5.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.red, width: 5.0),
+                                ),
+                                suffixIcon: Icon(
+                                  Icons.person_add,
+                                  color: Colors.black,
+                                ),
+                                suffixIconColor: Colors.black,
+                                errorStyle: TextStyle(
+                                  color: Colors.red,
+                                ),
+                                hintStyle: TextStyle(
+                                    fontSize: 20, color: Colors.black)),
+                            validator: ((value) {
+                              if (value!.isEmpty ||
+                                  value == null ||
+                                  value.characters.length < 10)
+                                return ('last name should be more than 10 characters');
+                              else
+                                return null;
+                            }),
+                          ),
+                        ),
+                      ),
+                      //age
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Container(
+                          width: 300,
+                          height: 60,
+                          child: TextFormField(
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                hintText: 'age',
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.greenAccent, width: 5.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 5.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.red, width: 5.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.red, width: 5.0),
+                                ),
+                                suffixIcon: Icon(
+                                  Icons.date_range,
+                                  color: Colors.black,
+                                ),
+                                suffixIconColor: Colors.black,
+                                errorStyle: TextStyle(
+                                  color: Colors.red,
+                                ),
+                                hintStyle: TextStyle(
+                                    fontSize: 20, color: Colors.black)),
+                            validator: ((value) {
+                              if (value!.isEmpty ||
+                                  value == null ||
+                                  !RegExp(r"^[1-9][0-9]+").hasMatch(value))
+                                return ('please enter your age');
+                              else
+                                return null;
+                            }),
+                          ),
+                        ),
+                      ),
+
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                         child: FloatingActionButton(
@@ -207,7 +319,7 @@ class _LoginState extends State<Login> {
                           backgroundColor: Colors.white,
                           tooltip: 'Increment',
                           child: const Icon(
-                            Icons.login,
+                            Icons.done,
                             color: Colors.black,
                             size: 30,
                           ),
