@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/provider/Update.dart';
 
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final _formkey = GlobalKey<FormState>();
-
+    final a = Provider.of<update>(context);
+    a.refresh();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -50,7 +52,7 @@ class _LoginState extends State<Login> {
                           style: TextStyle(color: Colors.black, fontSize: 20),
                         ),
                         Text(
-                          txt,
+                          a.txt,
                           style: TextStyle(color: Colors.amber, fontSize: 24),
                         )
                       ],

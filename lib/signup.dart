@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_application_1/provider/Update.dart';
+import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
-
   @override
   State<Signup> createState() => _SignupState();
 }
@@ -17,6 +17,8 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    final a = Provider.of<update>(context);
+    a.refresh();
     final _formkey = GlobalKey<FormState>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -53,7 +55,7 @@ class _SignupState extends State<Signup> {
                           style: TextStyle(color: Colors.black, fontSize: 20),
                         ),
                         Text(
-                          txt,
+                          a.txt,
                           style: TextStyle(color: Colors.amber, fontSize: 24),
                         )
                       ],

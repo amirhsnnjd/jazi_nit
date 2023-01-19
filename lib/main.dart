@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login.dart';
+import 'package:flutter_application_1/provider/Update.dart';
 import 'package:flutter_application_1/signup.dart';
 
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(Signup());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<update>(
+        create: (context) => update(),
+      ),
+    ],
+    child: Signup(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
