@@ -10,10 +10,14 @@ class update with ChangeNotifier {
 
   void refresh() {
     Timer mytimer = Timer.periodic(Duration(seconds: 5), (timer) {
-      if (i > 3) i = 0;
       txt = arr[i];
       i++;
       notifyListeners();
     });
+    if (i > 3) {
+      mytimer.cancel();
+      i = 0;
+      refresh();
+    }
   }
 }
