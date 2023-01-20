@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_application_1/provider/Update.dart';
+import 'package:flutter_application_1/provider/shared.dart';
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'main.dart';
@@ -18,8 +19,38 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
-    final a = Provider.of<update>(context);
-    a.refresh();
+    showAlertDialog(BuildContext context) {
+      // Create button
+      Widget okButton = FlatButton(
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+
+      // Create AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("signup"),
+        content: Text("you signed up."),
+        actions: [
+          okButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
+    //final a = Provider.of<update>(context);
+    final s = Provider.of<shared>(context);
+    String? pas;
+    String? user;
+    //a.refresh();
     final _formkey = GlobalKey<FormState>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -47,11 +78,27 @@ class _SignupState extends State<Signup> {
                   ),
                   PopupMenuItem<int>(
                     value: 1,
-                    child: Text("Login"),
+                    child: Row(
+                      children: [
+                        Text("Login"),
+                        Icon(
+                          Icons.login,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
                   PopupMenuItem<int>(
                     value: 2,
-                    child: Text("Signup"),
+                    child: Row(
+                      children: [
+                        Text("logout"),
+                        Icon(
+                          Icons.logout,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
                 ];
               }, onSelected: (value) {
@@ -65,7 +112,9 @@ class _SignupState extends State<Signup> {
                     context,
                     MaterialPageRoute(builder: (context) => Login()),
                   );
-                } else if (value == 2) {}
+                } else if (value == 2) {
+                  s.login.clear();
+                }
               }),
             ],
           ),
@@ -104,7 +153,7 @@ class _SignupState extends State<Signup> {
                                   TextStyle(color: Colors.black, fontSize: 20),
                             ),
                             Text(
-                              a.txt,
+                              /*a.txt*/ "up to date",
                               style:
                                   TextStyle(color: Colors.amber, fontSize: 24),
                             )
@@ -162,8 +211,10 @@ class _SignupState extends State<Signup> {
                                       !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                           .hasMatch(value))
                                     return ('email is wrong');
-                                  else
+                                  else {
+                                    user = value;
                                     return null;
+                                  }
                                 }),
                               ),
                             ),
@@ -209,8 +260,10 @@ class _SignupState extends State<Signup> {
                                 validator: ((value) {
                                   if (value!.isEmpty || value == null)
                                     return ('please enter password');
-                                  else
+                                  else {
+                                    pas = value;
                                     return null;
+                                  }
                                 }),
                               ),
                             ),
@@ -371,11 +424,14 @@ class _SignupState extends State<Signup> {
                               onPressed: () => {
                                 if (_formkey.currentState!.validate())
                                   {
-                                    /*Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SuccessPage()),
-                              )*/
+                                    s.login.setString("user", user.toString()),
+                                    s.login.setString("pass", pas.toString()),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Login()),
+                                    ),
+                                    showAlertDialog(context),
                                   }
                               },
                               backgroundColor: Colors.white,

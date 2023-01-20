@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Album/Album.dart';
 import 'package:flutter_application_1/Album/AlbumList.dart';
@@ -42,6 +44,33 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
+    showAlertDialog(BuildContext context) {
+      // Create button
+      Widget okButton = FlatButton(
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+
+      // Create AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("logout"),
+        content: Text("you logged out."),
+        actions: [
+          okButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
     final a = Provider.of<update>(context);
     final d = Provider.of<Data_provider>(context);
     final s = Provider.of<shared>(context);
@@ -74,11 +103,27 @@ class _MainState extends State<Main> {
                   ),
                   PopupMenuItem<int>(
                     value: 1,
-                    child: Text("Login"),
+                    child: Row(
+                      children: [
+                        Text("Login"),
+                        Icon(
+                          Icons.login,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
                   PopupMenuItem<int>(
                     value: 2,
-                    child: Text("Signup"),
+                    child: Row(
+                      children: [
+                        Text("logout"),
+                        Icon(
+                          Icons.logout,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
                 ];
               }, onSelected: (value) {
@@ -89,10 +134,8 @@ class _MainState extends State<Main> {
                     MaterialPageRoute(builder: (context) => Login()),
                   );
                 } else if (value == 2) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Signup()),
-                  );
+                  s.login.clear();
+                  showAlertDialog(context);
                 }
               }),
             ],
@@ -117,9 +160,20 @@ class _MainState extends State<Main> {
                                   child: Column(
                                     children: [
                                       if (s.login.getString("user") != null)
-                                        Text(s.login
-                                            .getString("user")
-                                            .toString()),
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.person),
+                                              Text(
+                                                s.login
+                                                    .getString("user")
+                                                    .toString(),
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       Center(
                                           child: Padding(
                                         padding:

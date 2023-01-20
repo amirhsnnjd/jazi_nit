@@ -16,11 +16,11 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final _formkey = GlobalKey<FormState>();
-    final a = Provider.of<update>(context);
+    // final a = Provider.of<update>(context);
     final s = Provider.of<shared>(context);
     String? pas;
     String? user;
-    a.refresh();
+    //a.refresh();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -47,11 +47,27 @@ class _LoginState extends State<Login> {
                   ),
                   PopupMenuItem<int>(
                     value: 1,
-                    child: Text("Login"),
+                    child: Row(
+                      children: [
+                        Text("Login"),
+                        Icon(
+                          Icons.login,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
                   PopupMenuItem<int>(
                     value: 2,
-                    child: Text("Signup"),
+                    child: Row(
+                      children: [
+                        Text("logout"),
+                        Icon(
+                          Icons.logout,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
                 ];
               }, onSelected: (value) {
@@ -62,10 +78,7 @@ class _LoginState extends State<Login> {
                   );
                 } else if (value == 1) {
                 } else if (value == 2) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Signup()),
-                  );
+                  s.login.clear();
                 }
               }),
             ],
@@ -105,7 +118,7 @@ class _LoginState extends State<Login> {
                                   TextStyle(color: Colors.black, fontSize: 20),
                             ),
                             Text(
-                              a.txt,
+                              /*a.txt*/ "safe",
                               style:
                                   TextStyle(color: Colors.amber, fontSize: 24),
                             )
@@ -244,14 +257,13 @@ class _LoginState extends State<Login> {
                               onPressed: () => {
                                 if (_formkey.currentState!.validate())
                                   {
-                                    s.login.setString("user", user.toString()),
-                                    s.login.setString("pass", pas.toString())
-
-                                    /*Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SuccessPage()),
-                              )*/
+                                    if (user == s.login.getString("user") &&
+                                        pas == s.login.getString("pass"))
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Main()),
+                                      )
                                   }
                               },
                               backgroundColor: Colors.white,
