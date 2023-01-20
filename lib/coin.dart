@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -13,27 +14,39 @@ class Coin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      width: 400,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(1.0),
             child: Image.network(
               snapshot.image.toString(),
               height: 35,
+              width: 35,
             ),
           ),
           Text(
-            "   " + snapshot.symbol.toString(),
+            snapshot.symbol.toString(),
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Text(
-            "   " + snapshot.currentPrice.toString(),
+            snapshot.currentPrice.toStringAsFixed(2) + " \$",
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
           ),
-          Text(
-            "   " + snapshot.priceChange24h.toString(),
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              child: Text(
+                snapshot.priceChange24h.toStringAsFixed(2) + " %",
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: (snapshot.priceChange24h < 0)
+                        ? Colors.red
+                        : Colors.green),
+              ),
+            ),
           ),
         ],
       ),

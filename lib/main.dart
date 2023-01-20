@@ -149,6 +149,13 @@ class _MainState extends State<Main> {
                                     ),
                                   )),
                                 ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "    image          symbol               price             chnage ",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
                                 for (int j = 0;
                                     j < snapshot.data!.albums.length;
                                     j++)
@@ -156,10 +163,15 @@ class _MainState extends State<Main> {
                               ],
                             );
                           }
-                          return Center(
-                            child: const SpinKitRotatingCircle(
-                              color: Colors.blue,
-                              size: 50.0,
+                          return Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              child: Center(
+                                child: const SpinKitRotatingCircle(
+                                  color: Colors.blue,
+                                  size: 50.0,
+                                ),
+                              ),
                             ),
                           );
                         },
