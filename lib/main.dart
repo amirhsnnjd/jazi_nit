@@ -5,6 +5,7 @@ import 'package:flutter_application_1/coin.dart';
 import 'package:flutter_application_1/login.dart';
 import 'package:flutter_application_1/provider/Data.dart';
 import 'package:flutter_application_1/provider/Update.dart';
+import 'package:flutter_application_1/provider/shared.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ import 'package:provider/provider.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(home: new Main());
+    return new MaterialApp(debugShowCheckedModeBanner: false, home: new Main());
   }
 }
 
@@ -24,6 +25,9 @@ void main() {
       ),
       ChangeNotifierProvider<Data_provider>(
         create: (context) => Data_provider(),
+      ),
+      ChangeNotifierProvider<shared>(
+        create: (context) => shared(),
       ),
     ],
     child: MyApp(),
@@ -40,8 +44,11 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     final a = Provider.of<update>(context);
     final d = Provider.of<Data_provider>(context);
+    final s = Provider.of<shared>(context);
+    s.initial();
     a.refresh();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
             title: Text("Cany COIN"),
@@ -82,7 +89,6 @@ class _MainState extends State<Main> {
                     MaterialPageRoute(builder: (context) => Login()),
                   );
                 } else if (value == 2) {
-                  print("hi");
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Signup()),
@@ -108,46 +114,55 @@ class _MainState extends State<Main> {
                                   height: 270,
                                   color: Colors.blue[400],
                                   //text cany.coin
-                                  child: Center(
-                                      child: Padding(
-                                    padding: EdgeInsets.fromLTRB(50, 100, 0, 0),
-                                    child: Column(
-                                      children: [
-                                        Row(
+                                  child: Column(
+                                    children: [
+                                      if (s.login.getString("user") != null)
+                                        Text(s.login
+                                            .getString("user")
+                                            .toString()),
+                                      Center(
+                                          child: Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(50, 100, 0, 0),
+                                        child: Column(
                                           children: [
-                                            Text(
-                                              "welcome to",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "welcome to",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20),
+                                                ),
+                                                Text(
+                                                  "  Cany.COIN",
+                                                  style: TextStyle(
+                                                      color: Colors.amber,
+                                                      fontSize: 24),
+                                                )
+                                              ],
                                             ),
-                                            Text(
-                                              "  Cany.COIN",
-                                              style: TextStyle(
-                                                  color: Colors.amber,
-                                                  fontSize: 24),
-                                            )
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "   our app is ",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20),
+                                                ),
+                                                Text(
+                                                  a.txt,
+                                                  style: TextStyle(
+                                                      color: Colors.amber,
+                                                      fontSize: 24),
+                                                )
+                                              ],
+                                            ),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "   our app is ",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20),
-                                            ),
-                                            Text(
-                                              a.txt,
-                                              style: TextStyle(
-                                                  color: Colors.amber,
-                                                  fontSize: 24),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  )),
+                                      )),
+                                    ],
+                                  ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,

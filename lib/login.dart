@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/Update.dart';
+import 'package:flutter_application_1/provider/shared.dart';
 import 'package:flutter_application_1/signup.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
@@ -16,6 +17,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final _formkey = GlobalKey<FormState>();
     final a = Provider.of<update>(context);
+    final s = Provider.of<shared>(context);
+    String? pas;
+    String? user;
     a.refresh();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -160,8 +164,10 @@ class _LoginState extends State<Login> {
                                       !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                           .hasMatch(value))
                                     return ('email is wrong');
-                                  else
+                                  else {
+                                    user = value;
                                     return null;
+                                  }
                                 }),
                               ),
                             ),
@@ -207,8 +213,10 @@ class _LoginState extends State<Login> {
                                 validator: ((value) {
                                   if (value!.isEmpty || value == null)
                                     return ('please enter password');
-                                  else
+                                  else {
+                                    pas = value;
                                     return null;
+                                  }
                                 }),
                               ),
                             ),
@@ -236,6 +244,9 @@ class _LoginState extends State<Login> {
                               onPressed: () => {
                                 if (_formkey.currentState!.validate())
                                   {
+                                    s.login.setString("user", user.toString()),
+                                    s.login.setString("pass", pas.toString())
+
                                     /*Navigator.push(
                                 context,
                                 MaterialPageRoute(
