@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Album/Album.dart';
 import 'package:flutter_application_1/Album/AlbumList.dart';
+import 'package:flutter_application_1/coin.dart';
 import 'package:flutter_application_1/login.dart';
 import 'package:flutter_application_1/provider/Data.dart';
 import 'package:flutter_application_1/provider/Update.dart';
@@ -37,7 +38,9 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
+    final a = Provider.of<update>(context);
     final d = Provider.of<Data_provider>(context);
+    a.refresh();
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
@@ -45,6 +48,7 @@ class _MainState extends State<Main> {
             backgroundColor: Colors.blue,
             actions: [
               PopupMenuButton(
+                  //icon: Icon(Icons.list_outlined),
                   // add icon, by default "3 dot" icon
                   // icon: Icon(Icons.book)
                   itemBuilder: (context) {
@@ -88,28 +92,81 @@ class _MainState extends State<Main> {
             ],
           ),
           body: Center(
-            child: Column(
+            child: ListView(
               children: [
-                Container(
-                  child: FutureBuilder<AlbumList>(
-                    future: d.album,
-                    builder: (context, snapshot) {
-                      print("1");
-                      if (snapshot.hasData) {
-                        print("2");
-                        return Column(
-                          children: [
-                            Text(snapshot.data!.albums[0].symbol.toString()),
-                          ],
-                        );
-                      }
-                      return const SpinKitRotatingCircle(
-                        color: Colors.green,
-                        size: 50.0,
-                      );
-                    },
-                  ),
-                )
+                Column(
+                  children: [
+                    Container(
+                      child: FutureBuilder<AlbumList>(
+                        future: d.album,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                              children: [
+                                Container(
+                                  width: 400,
+                                  height: 270,
+                                  color: Colors.blue[400],
+                                  //text cany.coin
+                                  child: Center(
+                                      child: Padding(
+                                    padding: EdgeInsets.fromLTRB(50, 100, 0, 0),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "welcome to",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20),
+                                            ),
+                                            Text(
+                                              "  Cany.COIN",
+                                              style: TextStyle(
+                                                  color: Colors.amber,
+                                                  fontSize: 24),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "   our app is ",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20),
+                                            ),
+                                            Text(
+                                              a.txt,
+                                              style: TextStyle(
+                                                  color: Colors.amber,
+                                                  fontSize: 24),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                                ),
+                                for (int j = 0;
+                                    j < snapshot.data!.albums.length;
+                                    j++)
+                                  Coin(snapshot.data!.albums[j]),
+                              ],
+                            );
+                          }
+                          return Center(
+                            child: const SpinKitRotatingCircle(
+                              color: Colors.blue,
+                              size: 50.0,
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           )),
