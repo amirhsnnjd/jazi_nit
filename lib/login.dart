@@ -1,11 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/Update.dart';
 import 'package:flutter_application_1/signup.dart';
-
 import 'package:provider/provider.dart';
-
 import 'main.dart';
 
 class Login extends StatefulWidget {
@@ -19,7 +16,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final _formkey = GlobalKey<FormState>();
     final a = Provider.of<update>(context);
-
     a.refresh();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -62,7 +58,6 @@ class _LoginState extends State<Login> {
                   );
                 } else if (value == 1) {
                 } else if (value == 2) {
-                  print("hi");
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Signup()),
@@ -220,31 +215,14 @@ class _LoginState extends State<Login> {
                           ),
                           TextButton(
                               onPressed: () => {
-                                    /* Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUp()),
-                                  )
-                                */
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Signup()),
+                                    )
                                   },
                               child: Text(
                                 "don't have an account?",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 17,
-                                    fontStyle: FontStyle.italic),
-                              )),
-                          TextButton(
-                              onPressed: () => {
-                                    /*Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Reset()),
-                                  )*/
-                                  },
-                              child: Text(
-                                "forgot password",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
