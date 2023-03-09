@@ -221,7 +221,7 @@ class _MainState extends State<Main> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "    image          symbol               price             chnage ",
+                                    "    image          symbol               price          chnage ",
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ),
